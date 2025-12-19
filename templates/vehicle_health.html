@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vehicle Health</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <header>Vehicle Health</header>
+
+    <div class="container">
+        {% include "_sidebar.html" %}
+
+        <div class="main">
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>VIN</th>
+                        <th>Engine Temp</th>
+                        <th>Mileage</th>
+                        <th>Error Count</th>
+                    </tr>
+
+                    {% for v in vehicles %}
+                    <tr>
+                        <td>{{ v.vin }}</td>
+                        <td>{{ v.engine_temp }}</td>
+                        <td>{{ v.mileage }}</td>
+                        <td>{{ v.error_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

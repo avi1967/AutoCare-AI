@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Predictions - AutoCare AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .high {
+            color: red;
+            font-weight: bold;
+        }
+
+        .low {
+            color: green;
+            font-weight: bold;
+        }
+
+        .button {
+            background-color: #2563eb;
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>Predictions</header>
+
+    <div class="container">
+        {% include "_sidebar.html" %}
+
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <div class="card">
+                <h3>Vehicle Failure Risk Predictions</h3>
+
+                <table>
+                    <tr>
+                        <th>VIN</th>
+                        <th>Risk Level</th>
+                        <th>Failure Probability</th>
+                        <th>Interpretation</th>
+                        <th>Action</th>
+                    </tr>
+
+                    {% for v in vehicles %}
+                    <tr>
+                        <td>{{ v.vin }}</td>
+
+                        <td class="{{ 'high' if v.risk == 'High' else 'low' }}">
+                            {{ v.risk }}
+                        </td>
+
+                        <td>{{ v.risk_score }}%</td>
+
+                        <td>
+                            There is a <b>{{ v.risk_score }}%</b> probability of component
+                            failure based on ML analysis of sensor and historical data.
+                        </td>
+
+                        <td>
+                            {% if v.risk == 'High' %}
+                            <a class="button" href="/schedule/{{ v.vin }}">
+                                Book Service
+                            </a>
+                            {% else %}
+                            Continue Monitoring
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

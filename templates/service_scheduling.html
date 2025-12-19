@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Service Scheduling</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <header>Service Scheduling</header>
+
+    <div class="container">
+        {% include "_sidebar.html" %}
+
+        <div class="main">
+
+            {% if role == 'customer' %}
+            <div class="card">
+                <a href="/schedule/{{ vin }}">Book Appointment</a>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>VIN</th>
+                        <th>Center</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for a in appointments %}
+                    <tr>
+                        <td>{{ a.vin }}</td>
+                        <td>{{ a.service_center }}</td>
+                        <td>{{ a.service_date }}</td>
+                        <td>{{ a.service_time }}</td>
+                        <td>{{ a.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

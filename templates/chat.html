@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AutoCare AI Chat</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .chat-box {
+            height: 360px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 12px;
+            background: #fafafa;
+        }
+
+        .msg-ai {
+            background: #e0f2fe;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+        }
+
+        .msg-user {
+            background: #dcfce7;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            text-align: right;
+        }
+
+        .quick-btn {
+            padding: 5px 10px;
+            margin-right: 6px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>AutoCare AI – Virtual Assistant</header>
+
+    <div class="container">
+        {% include "_sidebar.html" %}
+
+        <div class="main">
+            <div class="card">
+                <h3>Vehicle Assistant – {{ vin }}</h3>
+
+                <!-- Chat messages -->
+                <div class="chat-box">
+                    {% for m in messages %}
+                    {% if m.sender_role == 'ai' %}
+                    <div class="msg-ai">
+                        <b>AutoCare AI</b><br>
+                        {{ m.message }}<br>
+                        <small>{{ m.timestamp }}</small>
+                    </div>
+                    {% else %}
+                    <div class="msg-user">
+                        <b>You</b><br>
+                        {{ m.message }}<br>
+                        <small>{{ m.timestamp }}</small>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <!-- Quick intent buttons -->
+                {% if session.role == 'customer' %}
+                <form method="POST" style="margin-top:10px;">
+                    <button class="quick-btn" name="message" value="What is my risk level?">Risk</button>
+                    <button class="quick-btn" name="message" value="Do I need service?">Service</button>
+                    <button class="quick-btn" name="message" value="What is the service cost?">Cost</button>
+                    <button class="quick-btn" name="message" value="Show my reports">Reports</button>
+                </form>
+
+                <!-- Free text -->
+                <form method="POST" style="margin-top:8px;">
+                    <input type="text" name="message" placeholder="Ask about risk, service, cost..." required
+                        style="width:75%;">
+                    <button type="submit">Send</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

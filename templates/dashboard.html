@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - AutoCare AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .button {
+            background-color: #2563eb;
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .high {
+            color: red;
+            font-weight: bold;
+        }
+
+        .low {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>Predictive Maintenance System</header>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>Navigation</h3>
+            <a href="/">Dashboard</a>
+            <a href="/vehicle-health">Vehicle Health</a>
+            <a href="/predictions">Predictions</a>
+            <a href="/service-scheduling">Service Scheduling</a>
+            <a href="/reports">Reports</a>
+            <a href="/audit-logs">Audit Logs</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div class="main">
+
+            <div class="alert-box">
+                ⚠️ High-risk vehicles detected. Immediate action recommended.
+            </div>
+
+            <div class="card">
+                <h3>Filters</h3>
+                <a class="button" href="/">Show All</a>
+                <a class="button" href="/?risk=high">High Risk Only</a>
+            </div>
+
+            <div class="card">
+                <h3>Active Vehicles</h3>
+                <table>
+                    <tr>
+                        <th>VIN</th>
+                        <th>Status</th>
+                        <th>Risk</th>
+                        <th>Probability</th>
+                        <th>Action</th>
+                    </tr>
+
+                    {% for v in vehicles %}
+                    <tr>
+                        <td>{{ v.vin }}</td>
+                        <td>{{ v.status }}</td>
+                        <td class="{{ 'high' if v.risk == 'High' else 'low' }}">{{ v.risk }}</td>
+                        <td>{{ v.risk_score }}%</td>
+                        <td>
+                            {% if v.risk == 'High' %}
+                            {% if v.risk == 'High' %}
+                            {% if v.notified %}
+                            <span style="color:gray; font-weight:bold;">Notified</span>
+                            {% else %}
+                            <a class="button" href="/notify/{{ v.vin }}">Notify</a>
+                            {% endif %}
+                            {% else %}
+                            Monitoring
+                            {% endif %}
+
+                            {% else %}
+                            Monitoring
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

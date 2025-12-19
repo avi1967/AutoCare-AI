@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule Service - AutoCare AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <header>
+        Schedule Service
+    </header>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Navigation</h3>
+
+            {% if session.role == 'admin' %}
+            <a href="/">Dashboard</a>
+            {% endif %}
+
+            <a href="/vehicle-health">Vehicle Health</a>
+            <a href="/predictions">Predictions</a>
+            <a href="/service-scheduling">Service Scheduling</a>
+            <a href="/reports">Reports</a>
+
+            {% if session.role == 'admin' %}
+            <a href="/audit-logs">Audit Logs</a>
+            {% endif %}
+
+            <a href="/logout">Logout</a>
+        </div>
+
+
+        <div class="main">
+
+            <!-- Risk Alert -->
+            <div class="alert-box">
+                ⚠️ High Risk Detected: Engine Belt Wear
+                <br>
+                Recommended action: Schedule service within 2–3 weeks.
+            </div>
+
+            <!-- Vehicle Details -->
+            <div class="card">
+                <h3>Vehicle Details</h3>
+                <p><b>Vehicle ID:</b> {{ vin }}</p>
+                <p><b>Predicted Issue:</b> Engine Belt Wear</p>
+                <p><b>Failure Probability:</b> High</p>
+                <p><b>Estimated Time to Failure:</b> 2–3 weeks</p>
+            </div>
+
+            <!-- Estimated Cost -->
+            <div class="card">
+                <p><b>Estimated Average Service Cost:</b> ₹{{ avg_cost }}</p>
+                <p style="font-size: 13px; color: gray;">
+                    (Based on historical maintenance data)
+                </p>
+            </div>
+
+            <!-- Scheduling Form -->
+            <div class="card">
+                <h3>Select Service Slot</h3>
+
+                <form method="POST">
+
+                    <label><b>Service Center</b></label><br>
+                    <select name="service_center" required>
+                        <option>Authorized Service Center – Downtown</option>
+                        <option>Authorized Service Center – City North</option>
+                    </select><br><br>
+
+                    <label><b>Date</b></label><br>
+                    <input type="date" name="service_date" required><br><br>
+
+                    <label><b>Time Slot</b></label><br>
+                    <select name="service_time" required>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>02:00 PM</option>
+                    </select><br><br>
+
+                    <!-- COST FIELD (ADMIN ONLY) -->
+                    {% if role == 'admin' %}
+                    <label><b>Estimated Cost (₹)</b></label><br>
+                    <input type="number" name="cost" value="{{ avg_cost }}" required><br><br>
+                    {% else %}
+                    <p>
+                        <b>Estimated Service Cost:</b> ₹{{ avg_cost }}<br>
+                        <span style="font-size:13px;color:gray;">
+                            Final cost will be confirmed by the service center
+                        </span>
+                    </p>
+                    {% endif %}
+
+                    <button type="submit">Confirm Appointment</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

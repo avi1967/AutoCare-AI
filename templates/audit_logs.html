@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Audit Logs</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <header>Audit Logs</header>
+
+    <div class="container">
+        {% include "_sidebar.html" %}
+
+        <div class="main">
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>Action</th>
+                    <th>VIN</th>
+                    <th>Time</th>
+                </tr>
+
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.user_role }}</td>
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.vin }}</td>
+                    <td>{{ log.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

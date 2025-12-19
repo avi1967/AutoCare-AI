@@ -1,0 +1,21 @@
+<div class="sidebar">
+    <h3>Navigation</h3>
+
+    {% if session.role == 'admin' %}
+    <a href="/">Dashboard</a>
+    {% endif %}
+
+    {% if session.role == 'customer' %}
+    <a href="/chat/{{ session.vin }}">Chat</a>
+    {% endif %}
+    <a href="/vehicle-health">Vehicle Health</a>
+    <a href="/predictions">Predictions</a>
+    <a href="/service-scheduling">Service Scheduling</a>
+    <a href="/reports">Reports</a>
+
+    {% if session.role == 'admin' %}
+    <a href="/audit-logs">Audit Logs</a>
+    {% endif %}
+
+    <a href="/logout">Logout</a>
+</div>
